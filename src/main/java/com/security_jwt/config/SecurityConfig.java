@@ -48,8 +48,8 @@ public class SecurityConfig {
                 .httpBasic(httpBasic->httpBasic.disable())
 
                 .authorizeHttpRequests(authorizeHttpRequests->{
-                    authorizeHttpRequests.requestMatchers("/", "/api/join", "/api/login", "/api/reissue").permitAll();
                     authorizeHttpRequests.requestMatchers("/api/admin").hasRole("ADMIN");
+                    authorizeHttpRequests.requestMatchers("/", "/api/login", "/api/join", "/api/reissue", "/api/naver", "/api/google", "/api/kakao", "/api/login/oauth2/code/google").permitAll();
                     authorizeHttpRequests.anyRequest().authenticated();
                 })
 
