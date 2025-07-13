@@ -49,7 +49,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authorizeHttpRequests->{
                     authorizeHttpRequests.requestMatchers("/api/admin").hasRole("ADMIN");
-                    authorizeHttpRequests.requestMatchers("/", "/api/login", "/api/join", "/api/reissue", "/api/naver", "/api/google", "/api/kakao", "/api/login/oauth2/code/google").permitAll();
+                    authorizeHttpRequests.requestMatchers("/", "/api/login", "/api/join", "/api/reissue", "/api/naver", "/api/google", "/api/kakao", "/api/login/oauth2/code/*").permitAll();
                     authorizeHttpRequests.anyRequest().authenticated();
                 })
 
