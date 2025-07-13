@@ -3,13 +3,16 @@ import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {setToken} from "./store";
 import apiClient from "./api/axiosInstance";
+import {useNavigate} from "react-router-dom";
 
-function Login({ onLogin }) {
+function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-    const csrfToken = useSelector(state=>state.token.token);
+    const token = useSelector(state=>state.token.token);
     const dispatch = useDispatch();
+    const navigator = useNavigate();
+
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -21,7 +24,7 @@ function Login({ onLogin }) {
             const token=response.headers["authorization"];
             //HTTP 헤더가 실제로는 "대소문자를 구분하지 않는(case-insensitive)" 스펙에 따르기
             await dispatch(setToken(token));
-            onLogin();
+            navigator("/test");
         } catch (error) {
             console.log(error);
             console.log(error.response.status);
@@ -44,6 +47,18 @@ function Login({ onLogin }) {
         }
     };
 
+    const handleNaverLogin = () => {
+        window.location.href = "/api/naver";
+    }
+
+    const handleGoogleLogin = async () => {
+        window.location.href = "/api/google";
+    }
+
+    const handleKaKaoLogin = async ()=>{
+        window.location.href = "/api/kakao";
+    }
+
     return (
         <div>
             <form>
@@ -65,6 +80,10 @@ function Login({ onLogin }) {
                 <button type="button" name="join" onClick={handleJoin}>Join</button>
             </form>
             {message && <p>{message}</p>}
+
+            <button onClick={handleNaverLogin}>네이버로 로그인</button>
+            <button onClick={handleGoogleLogin}>구글로 로그인</button>
+            <button onClick={handleKaKaoLogin}>카카오 로그인</button>
         </div>
     );
 }

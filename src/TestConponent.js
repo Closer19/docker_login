@@ -10,6 +10,24 @@ export default function TestConponent(){
     const dispatch = useDispatch();
     const token = useSelector(state=>state.token.token);
 
+    useEffect(()=>{
+        const fetchData = async ()=>{
+            try{
+                const response = await apiClient.post("/reissue",null, {
+                    withCredentials:true,
+                });
+                const token=response.headers["authorization"];
+                //HTTP 헤더가 실제로는 "대소문자를 구분하지 않는(case-insensitive)" 스펙에 따르기
+                await dispatch(setToken(token));
+
+            }catch(e){
+                if(e.response.data)
+                    console.log(e.response.data);
+            }
+        };
+        fetchData();
+    }, []);
+
     const handleAdmin=async (e)=>{
         try{
             const response=await apiClient.get("/admin");
