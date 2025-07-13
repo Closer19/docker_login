@@ -117,7 +117,7 @@ public class KakaoLoginController {
             return ResponseEntity.status(HttpStatus.OK).body(token);
         }
 
-        ResponseCookie cookie = ResponseCookie.from("Authorization", refresh) //최초 refresh토큰만 전달하여 다시 access토큰을 요청하도록 함
+        ResponseCookie cookie = ResponseCookie.from("refresh", refresh) //최초 refresh토큰만 전달하여 다시 access토큰을 요청하도록 함
                 .httpOnly(true)
                 .secure(false) // 운영환경에서는 true
                 .path("/")
